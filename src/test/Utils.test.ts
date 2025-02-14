@@ -1,58 +1,70 @@
-import { getStringInfor, toUpperCase } from "../app/Utils";
+import { getStringInfor, toUpperCase, StringUtils } from "../app/Utils";
 
 describe('Utils test suite', () => {
+    describe('StringUtils tests', () => {
 
-    it('should return uppercase of valid string', () => {
-        // arrange:
-        const sut = toUpperCase;
-        const expected = 'ABC'
+        let sut: StringUtils;
 
-        // act:
-        const actual = sut('abc');
+        beforeEach(() => {
+            sut = new StringUtils();
+            console.log('Setup');
+        });
 
-        // assert:
-        expect(actual).toBe(expected);
-    })
+        it('Should return correct upperCase', () => {
+            const actual = sut.toUpperCase('long');
 
-    describe.only('ToUpperCase examples', () => {
-        it.each([
-            { input: 'abc', expected: 'ABC' },
-            { input: 'long', expected: 'LONG' },
-            { input: 'deptrai', expected: 'DEPTRAI' },
-        ])('$input toUpperCase should be $expected', ({ input, expected }) => {
-            const actual = getStringInfor(input);
-            expect(actual.upperCase).toBe(expected);
-        })
-    })
+            expect(actual).toBe('LONG');
+            console.log('Actual test')
+        });
 
-    describe('getStringInFor for arg My-String should', () => {
-        test('return right lenght', () => {
-            const actual = getStringInfor('My-String');
-            expect(actual.characters).toHaveLength(9);
+        it('Should throw error on a invalid argument - function', () => {
+            function expectError() {
+                const actual = sut.toUpperCase('');
+            }
+
+            expect(expectError).toThrow();
+            expect(expectError).toThrowError('Invalid argument');
         });
-        test('return right lower case', () => {
-            const actual = getStringInfor('My-String');
-            expect(actual.lowerCase).toBe('my-string');
+
+        it('Should throw error on a invalid argument - arrow function', () => {
+            expect(() => {
+                sut.toUpperCase('');
+            }).toThrowError('Invalid argument');
         });
-        test('return right uppercase', () => {
-            const actual = getStringInfor('My-String');
-            expect(actual.upperCase).toBe('MY-STRING');
-        });
-        test('return right characters', () => {
-            const actual = getStringInfor('My-String');
-            expect(actual.characters).toEqual((['M', 'y', '-', 'S', 't', 'r', 'i', 'n', 'g']));
-            expect(actual.characters).toContain<string>('y');
-            expect(actual.characters).toEqual(
-                expect.arrayContaining(['M', 'y', '-', 'S', 't', 'r', 'i'])
-            );
-        });
-        test('return defined extra infor', () => {
-            const actual = getStringInfor('My-String');
-            expect(actual.extraInfor).toBeDefined();
-        });
-        test('return right extra infor', () => {
-            const actual = getStringInfor('My-String');
-            expect(actual.extraInfor).toEqual({});
+
+        it('Should throw error on a invalid argument - try catch block', (done) => {
+            try {
+                sut.toUpperCase('');
+                done('GetStringInfor should throw error for invalid arg!')
+            } catch (error) {
+                expect(error).toBeInstanceOf(Error);
+                expect(error).toHaveProperty('message', 'Invalid argument!');
+                done();
+            }
         });
     });
+
+
+    describe('StringUtils tests', () => {
+
+        let sut: StringUtils;
+
+        beforeEach(() => {
+            sut = new StringUtils();
+            console.log('Setup');
+        });
+
+        afterEach(() => {
+            //clear mocks
+            console.log('Teardown')
+        });
+
+        it('Should return correct upperCase', () => {
+            const actual = sut.toUpperCase('long');
+
+            expect(actual).toBe('LONG');
+            console.log('Actual test')
+        });
+    });
+
 });

@@ -1,4 +1,13 @@
 
+
+export class StringUtils {
+    public toUpperCase(arg: string) {
+        if (!arg) {
+            throw new Error('Invalid argument!');
+        }
+        return arg.toUpperCase();
+    }
+}
 export function toUpperCase(arg: String) {
     return arg.toUpperCase();
 }
