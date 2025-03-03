@@ -12,7 +12,7 @@ const config : Config.InitialOptions = {
         `${baseDir}/**/*.ts`
     ],
     testMatch: [
-        `${baseDirTest}/**/*.ts`
+        `${baseDirTest}/**/*.test.ts`
     ],
 }
  export default config;
